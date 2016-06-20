@@ -2,12 +2,10 @@ import {Scale} from '/Scale.js';
 import {Tone} from '/Tone.js';
 import {Note} from '/Note.js';
 
-export class MelodyGenerator {
+export class RandomMelodyGenerator {
   constructor(scale) {
     this.scale = scale;
   }
-
-
 
   calculateRandomNoteDurationArray() {
     var outputArray = []
@@ -29,6 +27,6 @@ export class MelodyGenerator {
       var note = new Note(randomToneFromScale.frequency(), duration);
       outputArray.push(note);
     }
-    return outputArray;
+    return new Melody(outputArray);
   }
 }
