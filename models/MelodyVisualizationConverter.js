@@ -1,3 +1,5 @@
+import {Melody} from '/Melody.js';
+
 export class MelodyVisualizationConverter {
   constructor(melody) {
     this.melody = melody;
@@ -14,8 +16,13 @@ export class MelodyVisualizationConverter {
   convertMelodyToArray() {
     melodyArray = this.melody.arrayOfNotes;
     outputArray = generateEmptyNestedArray();
-    foreach (note in melodyArray) {
-      
+    indexPointer = 0
+    for (i = 0; i < melodyArray.length) {
+      for (j = 0; j < note.durationInBeats; i++) {
+          outputArray[i][j] = true
+      }
+      indexPointer += note.durationInBeats;
     }
+    return outputArray;
   }
 }

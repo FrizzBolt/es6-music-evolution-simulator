@@ -6,10 +6,8 @@ export class DurationSubMutator extends MelodyMutator {
     super(melody);
   }
 
-  mutateRandomDurations() {
-    var note1 = this.randomNote;
-    var note2 = this.randomNote;
-    note1 += 1;
-    note2 += 1;
+  static action() {
+    super.randomNote().durationInBeats - 1;
+    super.randomNote().durationInBeats + 1;
   }
 }

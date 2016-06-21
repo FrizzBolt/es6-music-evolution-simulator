@@ -3,7 +3,15 @@ import {Tone} from '/Tone.js';
 export class Note {
   constructor(tone, durationInBeats) {
     this.tone = tone;
-    this.durationInBeats = durationinBeats;
+    this.durationInBeats = durationInBeats;
+  }
+
+  get durationInBeats() {
+    return this.durationInBeats;
+  }
+
+  toneNum() {
+    return this.tone.num;
   }
 
   duration() {
