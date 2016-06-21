@@ -1,13 +1,17 @@
-export class Tone {
+class Tone {
   constructor(num) {
     this.num = num;
   }
 
-  get num() {
-    return this.num;
+  get toneNum() {
+  	return this.num;
+  }
+
+  set toneNum(number) {
+  	this.num = number;
   }
 
   frequency() {
-    440 * Math.pow(2, (this.num / 12));
+    return 440 * Math.pow(2, (this.toneNum / 12));
   }
 }

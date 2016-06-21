@@ -6,7 +6,7 @@ export class Note {
     this.durationInBeats = durationInBeats;
   }
 
-  get durationInBeats() {
+  durationInBeats() {
     return this.durationInBeats;
   }
 
@@ -15,6 +15,10 @@ export class Note {
   }
 
   duration() {
-    return (1 / (BEATS_PER_MINUTES / 60) * durationInBeats);
+    return (1 / (BEATS_PER_MINUTE / 60) * this.durationInBeats);
+  }
+
+  frequency() {
+  	return this.tone
   }
 }
