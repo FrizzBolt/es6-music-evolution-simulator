@@ -3,13 +3,17 @@ export class Melody {
     this.arrayOfNotes = arrayOfNotes;
   }
 
-  get arrayOfNotes() {
+  get notesArray() {
     return this.arrayOfNotes;
+  }
+
+  set notesArray(array) {
+    this.arrayOfNotes = array;
   }
 
   calculateLength() {
     var finalDuration = 0;
-    for (noteDuration in this.arrayOfNotes) {
+    for (var noteDuration in this.arrayOfNotes) {
       finalDuration += noteDuration;
     }
     return finalDuration;

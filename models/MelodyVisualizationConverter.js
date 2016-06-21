@@ -17,7 +17,7 @@ export class MelodyVisualizationConverter {
     melodyArray = this.melody.arrayOfNotes;
     outputArray = generateEmptyNestedArray();
     indexPointer = 0
-    for (i = 0; i < melodyArray.length) {
+    for (i = 0; i < melodyArray.length; i++) {
       for (j = 0; j < note.durationInBeats; i++) {
           outputArray[i][j] = true
       }
