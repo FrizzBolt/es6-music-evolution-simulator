@@ -2,9 +2,10 @@ import {Scale} from '/Scale.js';
 import {Melody} from '/Melody.js';
 
 export class MelodyMutator {
-  constructor (melody) {
+  constructor (melody, scale, subMutators) {
     this.melody = melody;
     this.scale = scale;
+    this.subMutators = [];
   }
 
   randomNote() {
@@ -12,6 +13,4 @@ export class MelodyMutator {
     randomIndex = Math.floor((Math.Random() * arrayOfNotes.length));
     return arrayOfNotes[randomIndex];
   }
-
-
 }
