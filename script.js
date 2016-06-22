@@ -4,6 +4,16 @@ const BEATS_PER_MINUTE = 120;
 const MAXIMUM_NOTE_LENGTH = 4;
 const MUTATION_FREQUENCY = 1;
 
+import Melody from 'models/Melody';
+import Note from 'models/Note';
+import Tone from 'models/Tone';
+import Scale from 'models/Scale';
+import Player from 'models/Player';
+import RandomMelodyGenerator from 'models/RandomMelodyGenerator';
+import ToneSubMutator from 'models/ToneSubMutator';
+import DurationSubMutator from 'models/DurationSubMutator';
+import MelodyVisualizationConverter from 'models/MelodyVisualizationConverter';
+
 var currentMelody;
 var currentScale;
 
