@@ -1,4 +1,4 @@
-import {Melody} from '/Melody.js';
+import { Melody } from 'Melody';
 
 export class Player {
   static play(melody) {
@@ -19,3 +19,5 @@ export class Player {
     }
   }
 }
+
+export { Melody }

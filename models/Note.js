@@ -1,4 +1,4 @@
-import {Tone} from '/Tone.js';
+import {Tone} from 'Tone';
 
 export class Note {
   constructor(tone, durationInBeats) {

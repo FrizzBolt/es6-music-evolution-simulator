@@ -1,4 +1,4 @@
-import {Melody} from '/Melody.js';
+import {Melody} from 'Melody';
 
 export class MelodyVisualizationConverter {
   constructor(melody) {

@@ -1,6 +1,6 @@
-import {Scale} from '/Scale.js';
-import {Tone} from '/Tone.js';
-import {Note} from '/Note.js';
+import {Scale} from 'Scale';
+import {Tone} from 'Tone';
+import {Note} from 'Note';
 
 export class RandomMelodyGenerator {
   constructor(scale) {
