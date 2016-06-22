@@ -1,18 +1,13 @@
 import {Melody} from '/Melody.js';
 
 export class Player {
-  constructor(melody) {
-    this.melody = melody;
-  }
-
-  play() {
-		var ctx = new (window.AudioContext || window.webkitAudioContext)(); // define audio context
+  static play(melody) {
     var osc;
     var note;
     var duration;
     var t = ctx.currentTime;
-    for (var i = 0; i < this.melody.notesArray.length; i++) {
-        note = this.melody.notesArray[i];
+    for (var i = 0; i < melody.ArrayOfNotes.length; i++) {
+        note = melody.ArrayOfNotes[i];
         osc = ctx.createOscillator();
         duration = note.duration();
         osc.type = "sine"
@@ -20,7 +15,6 @@ export class Player {
         osc.start(t);
         osc.stop(t + note.duration());
         t += note.duration();
-        console.log(t);
         osc.connect(ctx.destination);
     }
   }

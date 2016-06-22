@@ -1,13 +1,18 @@
 import {Melody} from '/Melody.js';
 import {MelodyMutator} from '/MelodyMutator.js';
 
-export class DurationSubMutator extends MelodyMutator {
-  constructor(melody) {
-    super(melody);
+export class DurationSubMutator {
+  constructor(parentMutator){
+    this.parentMutator = parentMutator;
   }
 
-  static action() {
-    super.randomNote().durationInBeats - 1;
-    super.randomNote().durationInBeats + 1;
+  action(){
+    var randIndMelody = Math.floor(Math.random() * MAXIMUM_NOTE_LENGTH);
+    var randIndMelody2 = Math.floor(Math.random() * MAXIMUM_NOTE_LENGTH);
+    var newNotesArray = this.melody.ArrayOfNotes;
+    console.log(newNotesArray)
+		newNotesArray[randIndMelody].beatDuration - 1;
+    newNotesArray[randIndMelody2].beatDuration + 1;
+    return new Melody(newNotesArray);    
   }
 }

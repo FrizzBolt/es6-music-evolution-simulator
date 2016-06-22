@@ -3,15 +3,15 @@ class Tone {
     this.num = num;
   }
 
-  get toneNum() {
+  get Num() {
   	return this.num;
   }
 
-  set toneNum(number) {
+  set Num(number) {
   	this.num = number;
   }
 
   frequency() {
-    return 440 * Math.pow(2, (this.toneNum / 12));
+    return 440 * Math.pow(2, (this.Num / 12));
   }
 }
