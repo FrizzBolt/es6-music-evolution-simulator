@@ -1,4 +1,4 @@
-class Tone {
+export class Tone {
   constructor(num) {
     this.num = num;
   }

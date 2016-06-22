@@ -1,7 +1,7 @@
 const NOTES_IN_SCALE = 12;
-const DURATION_OF_MELODY = 3;
+const DURATION_OF_MELODY = 10;
 const BEATS_PER_MINUTE = 160;
-const MAXIMUM_NOTE_LENGTH = 1;
+const MAXIMUM_NOTE_LENGTH = 4;
 const MUTATION_FREQUENCY = 1;
 var ctx = new (window.AudioContext || window.webkitAudioContext)(); // define audio context
 
@@ -33,40 +33,77 @@ class Melody {
 }
 
 class MelodyMutator {
-  constructor (melody, scale, subMutators){
+  constructor (melody, scale){
     this.melody = melody;
     this.scale = scale;
+    this.subMutators = [];
   }
 
-  mutateDuration() {
-  	var randIndMelody = Math.floor(Math.random() * MAXIMUM_NOTE_LENGTH);
-    var randIndMelody2 = Math.floor(Math.random() * MAXIMUM_NOTE_LENGTH);
-    var newNotesArray = this.melody.ArrayOfNotes;
-    console.log(newNotesArray)
-		newNotesArray[randIndMelody].beatDuration - 1;
-    newNotesArray[randIndMelody2].beatDuration + 1;
-    return new Melody(newNotesArray);
+  get Melody() {
+    return this.melody;
   }
 
-  mutatePitch(){
-    var randScaleIndex = Math.floor(Math.random() * NOTES_IN_SCALE);
-    var randMelodyIndex = Math.floor(Math.random() * this.melody.length);
-    var newNotesArray = this.melody.ArrayOfNotes;
-    newNotesArray[randMelodyIndex] = this.scale.scaleArray()[randScaleIndex];
-    return new Melody(newNotesArray);
+  set Melody(value) {
+    this.melody = value;
   }
 
-  activateTheMutator() {
-		var rand = Math.floor((Math.random() * 2))
-    console.log(rand);
-    if (rand === 0) {
-    	return this.mutatePitch();
-    }
-    else {
-    	return this.mutateDuration();
-    }
+  get SubMutators() {
+    return this.subMutators;
+  }
+
+  set SubMutators(value) {
+    this.subMutators = value;
+  }
+
+  get Scale() {
+    return this.scale;
+  }
+
+  set Scale(value) {
+    this.scale = value;
+  }
+
+  activateTheMutator(){
+    var randIndex = Math.floor(Math.random() * this.subMutators.length)
+    return this.subMutators[randIndex].action();
   }
 }
+
+class ToneSubMutator {
+  constructor(parentMutator){
+    this.parentMutator = parentMutator;
+  }
+
+  action(){
+    console.log("Tone Mutator Activated")
+    var newNotesArray = this.parentMutator.Melody.ArrayOfNotes
+    var randScaleIndex = Math.floor(Math.random() * NOTES_IN_SCALE);
+    var randMelodyIndex = Math.floor(Math.random() * newNotesArray.length);
+    newNotesArray[randMelodyIndex] = new Note(this.parentMutator.Scale.scaleArray()[randScaleIndex], newNotesArray[randMelodyIndex].DurationInBeats);
+    return new Melody(newNotesArray);
+  }
+}
+
+class DurationSubMutator {
+  constructor(parentMutator){
+    this.parentMutator = parentMutator;
+  }
+
+  action(){
+    console.log("Duration Mutator Activated")
+    var newNotesArray = this.parentMutator.Melody.ArrayOfNotes
+    var randIndMelody = Math.floor(Math.random() * newNotesArray.length);
+    var randIndMelody2 = Math.floor(Math.random() * newNotesArray.length);
+    var newToneNum = newNotesArray[randIndMelody].Tone.Num;
+    var newToneNum2 = newNotesArray[randIndMelody2].Tone.Num;
+    var newTone1 = new Tone(newToneNum);
+    var newTone2 = new Tone(newToneNum2);
+		newNotesArray[randIndMelody] = new Note(newTone1, (newNotesArray[randIndMelody].DurationInBeats + 1))
+    newNotesArray[randIndMelody2] = new Note(newTone2, (newNotesArray[randIndMelody2].DurationInBeats - 1))
+    return new Melody(newNotesArray);
+  }
+}
+
 
 class MelodyVisualizationConverter {
   constructor(melody) {
@@ -103,16 +140,24 @@ class Note {
     this.durationInBeats = durationInBeats;
   }
 
-  get beatDuration() {
+  get DurationInBeats() {
     return this.durationInBeats;
   }
 
-  set beatDuration(newDuration) {
+  set DurationInBeats(newDuration) {
   	this.beatDuration = newDuration;
   }
 
-  Num() {
-    return this.tone.num;
+  get Tone() {
+    return this.tone;
+  }
+
+  set Tone(value) {
+    this.tone = value;
+  }
+
+  num() {
+    return this.tone.Num;
   }
 
   duration() {
@@ -120,7 +165,7 @@ class Note {
   }
 
   frequency() {
-  	return this.tone
+  	return this.tone;
   }
 }
 
@@ -135,7 +180,7 @@ class Player {
         osc = ctx.createOscillator();
         duration = note.duration();
         osc.type = "sine"
-        osc.frequency.value = note.frequency();
+        osc.frequency.value = note.Tone.frequency();
         osc.start(t);
         osc.stop(t + note.duration());
         t += note.duration();
@@ -167,7 +212,7 @@ class RandomMelodyGenerator {
     for (var i = 0; i < durationArray.length; i++) {
       var positionOnScale = Math.floor((Math.random() * NOTES_IN_SCALE))
       var randomToneFromScale = this.scale.scaleArray()[positionOnScale];
-      var note = new Note(randomToneFromScale.frequency(), durationArray[i]);
+      var note = new Note(randomToneFromScale, durationArray[i]);
       outputArray.push(note);
     }
     return new Melody(outputArray);
@@ -210,6 +255,7 @@ class Tone {
 var currentMelody;
 var currentScale;
 
+
 $("#generate").click(function(){
     var tone = new Tone(0)
     var scale = new Scale(tone);
@@ -226,6 +272,7 @@ $("#play").click(function(){
 })
 
 $("#mutate").click(function(){
-		var mutator = new MelodyMutator(currentMelody, currentScale);
+    var mutator = new MelodyMutator(currentMelody, currentScale);
+    mutator.SubMutators = [new ToneSubMutator(mutator), new DurationSubMutator(mutator)];
 		currentMelody = mutator.activateTheMutator();
 })
