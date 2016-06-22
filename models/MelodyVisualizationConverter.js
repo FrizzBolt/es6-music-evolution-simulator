@@ -7,21 +7,23 @@ export class MelodyVisualizationConverter {
 
   generateEmptyNestedArray() {
     var outputArray = [];
-    for (i = 0; i < NOTES_IN_SCALE; i++) {
+    for (var i = 0; i < NOTES_IN_SCALE; i++) {
       outputArray.push(new Array(DURATION_OF_MELODY).fill(false));
     }
     return outputArray;
   }
 
   convertMelodyToArray() {
-    melodyArray = this.melody.arrayOfNotes;
-    outputArray = generateEmptyNestedArray();
-    indexPointer = 0
-    for (i = 0; i < melodyArray.length; i++) {
-      for (j = 0; j < note.durationInBeats; i++) {
-          outputArray[i][j] = true
+    var melodyArray = this.melody.arrayOfNotes;
+    var outputArray = this.generateEmptyNestedArray();
+    var indexPointer = 0;
+    for (var i = 0; i < melodyArray.length; i++) {
+    	var note = melodyArray[i];
+      for (var j = 0; j < note.durationInBeats; j++) {
+          outputArray[i][j + indexPointer] = true;
+
       }
-      indexPointer += note.durationInBeats;
+      indexPointer += 1;
     }
     return outputArray;
   }

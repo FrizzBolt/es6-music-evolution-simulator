@@ -5,13 +5,15 @@ const MAXIMUM_NOTE_LENGTH = 4;
 const MUTATION_FREQUENCY = 1;
 
 var currentMelody;
+var currentScale;
 
 $("#generate").click(function(){
     var tone = new Tone(0)
     var scale = new Scale(tone);
+    currentScale = scale;
     var generator = new RandomMelodyGenerator(scale);
     var randomMelody = generator.generateRandomMelody();
-    currentMelody = randomMelody
+    currentMelody = randomMelody;
     var visualizer = new MelodyVisualizationConverter(randomMelody);
     visualizer.convertMelodyToArray()
 });
@@ -21,5 +23,6 @@ $("#play").click(function(){
 })
 
 $("#mutate").click(function(){
-		var durationSubMutator = new DurationSubMutator
+		var mutator = new MelodyMutator(currentMelody, currentScale);
+		currentMelody = mutator.activateTheMutator();
 })

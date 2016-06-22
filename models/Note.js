@@ -6,11 +6,15 @@ export class Note {
     this.durationInBeats = durationInBeats;
   }
 
-  durationInBeats() {
+  get beatDuration() {
     return this.durationInBeats;
   }
 
-  toneNum() {
+  set beatDuration(newDuration) {
+  	this.beatDuration = newDuration;
+  }
+
+  Num() {
     return this.tone.num;
   }
 
