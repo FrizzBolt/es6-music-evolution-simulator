@@ -99,9 +99,12 @@ class DurationSubMutator {
         var newToneNum2 = newNotesArray[randIndMelody2].Tone.Num;
         var newTone1 = new Tone(newToneNum);
         var newTone2 = new Tone(newToneNum2);
-        if ((newNotesArray[randIndMelody].DurationInBeats > 1) && (newNotesArray[randIndMelody2].DurationInBeats > 1))
+        if ((newNotesArray[randIndMelody].DurationInBeats > 2) && (newNotesArray[randIndMelody2].DurationInBeats > 1) ||
+            (newNotesArray[randIndMelody].DurationInBeats > 1) && (newNotesArray[randIndMelody2].DurationInBeats > 2))
+            {
             newNotesArray[randIndMelody] = new Note(newTone1, (newNotesArray[randIndMelody].DurationInBeats + 1))
-        newNotesArray[randIndMelody2] = new Note(newTone2, (newNotesArray[randIndMelody2].DurationInBeats - 1))
+            newNotesArray[randIndMelody2] = new Note(newTone2, (newNotesArray[randIndMelody2].DurationInBeats - 1))
+            }
         return new Melody(newNotesArray);
     }
 }
