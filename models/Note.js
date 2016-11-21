@@ -1,28 +1,34 @@
-import {Tone} from 'Tone';
+class Note {
+    constructor(tone, durationInBeats) {
+        this.tone = tone;
+        this.durationInBeats = durationInBeats;
+    }
 
-export class Note {
-  constructor(tone, durationInBeats) {
-    this.tone = tone;
-    this.durationInBeats = durationInBeats;
-  }
+    get DurationInBeats() {
+        return this.durationInBeats;
+    }
 
-  get beatDuration() {
-    return this.durationInBeats;
-  }
+    set DurationInBeats(newDuration) {
+        this.beatDuration = newDuration;
+    }
 
-  set beatDuration(newDuration) {
-  	this.beatDuration = newDuration;
-  }
+    get Tone() {
+        return this.tone;
+    }
 
-  Num() {
-    return this.tone.num;
-  }
+    set Tone(value) {
+        this.tone = value;
+    }
 
-  duration() {
-    return (1 / (BEATS_PER_MINUTE / 60) * this.durationInBeats);
-  }
+    num() {
+        return this.tone.Num;
+    }
 
-  frequency() {
-  	return this.tone
-  }
+    duration() {
+        return (1 / (BEATS_PER_MINUTE / 60) * this.durationInBeats);
+    }
+
+    frequency() {
+        return this.tone;
+    }
 }

@@ -1,8 +1,9 @@
-const NOTES_IN_SCALE = 12;
+const NOTES_IN_SCALE = 8;
 const DURATION_OF_MELODY = 10;
 const BEATS_PER_MINUTE = 160;
-const MAXIMUM_NOTE_LENGTH = 4;
+const MAXIMUM_NOTE_LENGTH = 2;
 const MUTATION_FREQUENCY = 1;
+
 var ctx = new(window.AudioContext || window.webkitAudioContext)(); // define audio context
 
 class Melody {
@@ -127,7 +128,6 @@ class MelodyVisualizationConverter {
             var yPosition = NOTES_IN_SCALE - note.Tone.Num;
             for (var j = 0; j < note.durationInBeats; j++) {
                 outputArray[yPosition][j + indexPointer] = true;
-
             }
             indexPointer += note.DurationInBeats;
         }
@@ -177,8 +177,6 @@ class Player {
         var note;
         var duration;
         var t = ctx.currentTime;
-        console.log(melody.ArrayOfNotes.length);
-        console.log()
         for (var i = 0; i < melody.ArrayOfNotes.length; i++) {
             note = melody.ArrayOfNotes[i];
             osc = ctx.createOscillator();
@@ -262,21 +260,22 @@ var currentScale;
 var canvas = new fabric.Canvas('c');
 
 var noteGrid = new fabric.Rect({
-    originX: 0,
-    originY: 0,
-    fill: '#4B6A88',
-    width: 300,
-    height: 100
+    originX: 'center',
+    originY: 'center',
+    fill: '#D5D5D5',
+    width: 400,
+    height: 200
 });
 
-var heightInCells = testArray.length;
-var widthInCells = testArray[0].length;
+var heightInCells = DURATION_OF_MELODY;
+var widthInCells = NOTES_IN_SCALE;
 var cellWidth = noteGrid.width / widthInCells;
 var cellHeight = noteGrid.height / heightInCells;
 
+
+
 var createNotes = function(array) {
-    var outputArray = []
-    outputArray.push(noteGrid);
+    var outputArray = [noteGrid]
     for (var i = 0; i < array.length; i++) {
         for (var j = 0; j < array[0].length; j++) {
             if (array[i][j]) {
@@ -285,7 +284,7 @@ var createNotes = function(array) {
                     top: (cellHeight * i),
                     fill: '#2A4A64',
                     width: cellWidth,
-                    height: cellHeight
+                    height: cellHeight,
                 });
                 outputArray.push(note);
             }
@@ -295,14 +294,18 @@ var createNotes = function(array) {
 }
 
 
-var drawNotesOnGrid = function(testArray) {
-    var notes = createNotes(testArray);
+var drawNotesOnGrid = function(array) {
+    var notes = createNotes(array);
     return new fabric.Group((notes), {
-        left: 50,
-        top: 50,
-        angle: 0
+        left: 0,
+        top: 0,
+        angle: 0,
+        hasRotatingPoint: false,
+        hasControls: false
     })
 };
+
+////////////////////////////////////////////////////////////////////////////////////
 
 $("#generate").click(function() {
     var tone = new Tone(0)
